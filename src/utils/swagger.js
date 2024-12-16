@@ -13,7 +13,7 @@ const options = {
     servers: [
       {
         url: process.env.NODE_ENV === 'production'
-        ? 'https://your-production-url.vercel.app' // Replace with your actual production URL
+        ? 'https://internship-liard-chi.vercel.app' // Replace with your actual production URL
         : 'http://localhost:3000',
       },
     ],
