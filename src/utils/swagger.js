@@ -12,7 +12,9 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000', // Change for deployment
+        url: process.env.NODE_ENV === 'production'
+        ? 'https://your-production-url.vercel.app' // Replace with your actual production URL
+        : 'http://localhost:3000',
       },
     ],
   },

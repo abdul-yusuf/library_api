@@ -2,19 +2,19 @@
     "version": 2,
     "builds": [
       {
-        "src": "app.js",
+        "src": "src/server.js",
         "use": "@vercel/node"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "app.js"
+        "dest": "src/server.js"
       }
     ],
     "env": {
-      "MONGODB_URI": "mongodb+srv://<man>:<password>@cluster.mongodb.net/library?retryWrites=true&w=majority",
-      "PORT": "3000"
+      "MONGODB_URI": "mongodb://mongo:XhVgabrWsRBNOcpMlgpdBTmUWoxKzvod@junction.proxy.rlwy.net:47533",
+      "PORT": "3001"
     }
   }
   
