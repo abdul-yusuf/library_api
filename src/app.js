@@ -18,7 +18,7 @@ connectDB();
 
 // Routes
 app.use('/api/books', bookRoutes);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Error Handling Middleware
 app.use(errorHandler);
