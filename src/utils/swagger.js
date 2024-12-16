@@ -4,30 +4,43 @@ const swaggerUi = require('swagger-ui-express');
 // Swagger Configuration
 const options = {
   definition: {
-    openapi: '3.0.0',
+    openapi: '3.1.0',
     info: {
       title: 'Library Management API',
       version: '1.0.0',
       description: 'A simple REST API for managing a library',
+      contact: {
+        name: "Yusuf Abdulhadi",
+        email: "abdul17yusuf@gmail.com",
+        url: "https://github.com/abdul-yusuf/library_api",
+      },
     },
     servers: [
       {
-        url: process.env.NODE_ENV === 'production'
-        ? 'https://internship-liard-chi.vercel.app' // Replace with your actual production URL
-        : 'http://localhost:3000',
+        url: "http://localhost:8080",
+        description: "Local server",
+      },
+      {
+        url: "https://internship-liard-chi.vercel.app",
+        description: "Live server",
       },
     ],
   },
-  apis: ['./routes/*.js'], // Path to API docs
+  apis: ['./routes/*.js', './app.js'], // Path to API docs
 };
 
-const specs = swaggerJsDoc(options);
+const swaggerSpec = swaggerJsDoc(options);
 
-// Export both `swaggerUi` and `specs` as an object
-module.exports = {
-  swaggerUi,
-  specs,
-};
-// module.exports = (app) => {
-//   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-// };
+function swaggerDocs(app, port) {
+  // Swagger Page
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  // Documentation in JSON format
+  app.get('/docs.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+  });
+
+  console.log(`Swagger docs available at http://localhost:${port}/api-docs`);
+}
+
+module.exports = swaggerDocs;

@@ -1,24 +1,42 @@
+const fs = require('fs');
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
-const { swaggerUi, specs } = require('./utils/swagger');
+const swaggerDocs = require('./utils/swagger');
 const bookRoutes = require('./routes/bookRoutes');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
-
+const marked = require('marked');
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+// app.use(cors());
 
 // Connect to Database
 connectDB();
+// Define the path to the README.md file
+const path = require('path'); // Ensure you require the path module
+
+console.log(path)
+const readmePath = path.join(__dirname, '../README.md'); // Resolves to one directory back
+console.log(readmePath)
 
 // Routes
+// Root route to display README.md content
+app.get('/', (req, res) => {
+  fs.readFile(readmePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading README.md:', err);
+      res.status(500).send('An error occurred while loading the documentation.');
+      return;
+    }
+    res.send(`<pre>${data}</pre>`);
+  });
+});
 app.use('/api/books', bookRoutes);
-app.use('', swaggerUi.serve, swaggerUi.setup(specs));
+swaggerDocs(app, 3000)
 
 // Error Handling Middleware
 app.use(errorHandler);
