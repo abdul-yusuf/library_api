@@ -24,11 +24,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use(errorHandler);
 
 // Cors Handling
-app.use(cors({
-    origin: '*', // Allow all origins. You can restrict this to specific domains for better security.
-    methods: ['GET', 'POST', 'PATCH'], // Allow only specific HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
-  }));
-app.options('*', cors());
+// app.use(cors({
+//     origin: '*', // Allow all origins. You can restrict this to specific domains for better security.
+//     methods: ['GET', 'POST', 'PATCH'], // Allow only specific HTTP methods
+//     allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+//   }));
+// app.options('*', cors());
 
 module.exports = app;
