@@ -6,6 +6,12 @@ const swaggerUi = require('swagger-ui-express');
 const cors = require('cors')
 const app = express();
 
+const path = require('path');
+
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+
 // Middleware
 app.use(express.json());
 app.use(cors())
