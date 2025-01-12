@@ -4,10 +4,14 @@ const Book = require('../models/Book');
 exports.addBook = async (req, res) => {
   try {
     const { title, author } = req.body;
+
+    console.log(title)
+    console.log(author)
     const newBook = new Book({ title, author });
     await newBook.save();
     res.status(201).json(newBook);
   } catch (error) {
+    console.error('Error in addBook:', error.message, error.stack);
     res.status(500).json({ error: 'Error adding book' });
   }
 };

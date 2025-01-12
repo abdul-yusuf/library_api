@@ -1,23 +1,17 @@
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
-// Swagger Configuration
-const options = {
-  definition: {
-    openapi: '3.1.0',
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
     info: {
-      title: 'Library Management API',
+      title: 'Library API',
       version: '1.0.0',
-      description: 'A simple REST API for managing a library',
-      contact: {
-        name: "Yusuf Abdulhadi",
-        email: "abdul17yusuf@gmail.com",
-        url: "https://github.com/abdul-yusuf/library_api",
-      },
+      description: 'API documentation for the library management system',
     },
     servers: [
       {
-        url: "http://localhost:8080",
+        url: "http://localhost:3000",
         description: "Local server",
       },
       {
@@ -26,21 +20,12 @@ const options = {
       },
     ],
   },
-  apis: ['./routes/*.js', './app.js'], // Path to API docs
+  apis: ['./src/routes/*.js'], // Path to the file with Swagger annotations
 };
 
-const swaggerSpec = swaggerJsDoc(options);
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-function swaggerDocs(app, port) {
-  // Swagger Page
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-  // Documentation in JSON format
-  app.get('/docs.json', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(swaggerSpec);
-  });
-
-  console.log(`Swagger docs available at http://localhost:${port}/api-docs`);
-}
-
-module.exports = swaggerDocs;
+module.exports = (app, port) => {
+  app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+  console.log(`Swagger documentation available at http://localhost:${port}/api-docs`);
+};
