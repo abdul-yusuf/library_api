@@ -1,8 +1,6 @@
 const express = require('express');
-const swaggerDocs = require('./utils/swagger');
-const bookRoutes = require('./routes/bookRoutes');
+const { swaggerSpec, swaggerUi, swaggerUiAssetsPath } = require("./utils/swagger");const bookRoutes = require('./routes/bookRoutes');
 const connectDB = require('./config/db');
-const swaggerUi = require('swagger-ui-express');
 const cors = require('cors')
 const app = express();
 
@@ -11,6 +9,7 @@ const path = require('path');
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 // Serve static Swagger files
+app.use("/static", express.static(swaggerUiAssetsPath));
 // const swaggerAssetPath = require('swagger-ui-dist').getAbsoluteFSPath();
 // app.use('/swagger-ui', express.static(swaggerAssetPath));
 
@@ -24,7 +23,14 @@ connectDB();
 app.use('/api/books', bookRoutes);
 
 // Swagger Documentation
-swaggerDocs(app, 3000);
+app.use(
+  "/",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customCssUrl: "/static/swagger-ui.css",
+    customJsUrl: "/static/swagger-ui-bundle.js",
+  })
+);
 
 // Export the app
 module.exports = app;
