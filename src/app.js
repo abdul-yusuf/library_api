@@ -10,7 +10,9 @@ const path = require('path');
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
-
+// Serve static Swagger files
+// const swaggerAssetPath = require('swagger-ui-dist').getAbsoluteFSPath();
+// app.use('/swagger-ui', express.static(swaggerAssetPath));
 
 // Middleware
 app.use(express.json());

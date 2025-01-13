@@ -1,10 +1,6 @@
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
-// Serve static Swagger files
-const swaggerAssetPath = require('swagger-ui-dist').getAbsoluteFSPath();
-app.use('/swagger-ui', express.static(swaggerAssetPath));
-
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
@@ -30,10 +26,10 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 module.exports = (app, port) => {
+  app.use("/", swaggerUi.serveFiles(swaggerDocs, { redirect: false }));
+  // app.get("/api-docs", swaggerUi.setup(swaggerSpec));
   app.use('/', swaggerUi.serve,
-    swaggerUi.setup(swaggerDocs, {
-      customCssUrl: '/swagger-ui/swagger-ui.css',
-    })
+    swaggerUi.setup(swaggerDocs)
   );
-  console.log(`Swagger documentation available at http://localhost:${port}/api-docs`);
+  console.log(`Swagger documentation available at http://localhost:${port}/`);
 };
