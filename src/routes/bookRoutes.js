@@ -1,5 +1,5 @@
 const express = require('express');
-const { addBook, borrowBook, returnBook, getAvailableBooks } = require('../controllers/bookController');
+const { addBook, borrowBook, returnBook, getAvailableBooks, getAllBooks } = require('../controllers/bookController');
 const router = express.Router();
 
 /**
@@ -140,5 +140,28 @@ router.patch('/:id/return', returnBook);
  *         description: Server error
  */
 router.get('/', getAvailableBooks);
+
+module.exports = router;
+// View All Books
+/**
+ * @swagger
+ * /api/books/all/:
+ *   get:
+ *     summary: Get all books
+ *     operationId: getAvailableBooks
+ *     tags: [Books]
+ *     responses:
+ *       200:
+ *         description: List of all books
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Book'
+ *       500:
+ *         description: Server error
+ */
+router.get('/all/', getAllBooks);
 
 module.exports = router;

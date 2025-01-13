@@ -61,3 +61,13 @@ exports.getAvailableBooks = async (req, res) => {
     res.status(500).json({ error: 'Error fetching books' });
   }
 };
+
+// Get All Books
+exports.getAllBooks = async (req, res) => {
+  try {
+    const allBooks = await Book.find() ;
+    res.status(200).json(allBooks);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching books' });
+  }
+};
