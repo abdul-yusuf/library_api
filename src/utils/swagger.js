@@ -31,7 +31,9 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 module.exports = (app, port) => {
   app.use('/', swaggerUi.serve,
-    swaggerUi.setup(swaggerDocs)
+    swaggerUi.setup(swaggerDocs, {
+      customCssUrl: '/swagger-ui/swagger-ui.css',
+    })
   );
   console.log(`Swagger documentation available at http://localhost:${port}/api-docs`);
 };
