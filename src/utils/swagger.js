@@ -28,9 +28,10 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 module.exports = (app, port) => {
   app.use('/', swaggerUi.serve,
     swaggerUi.setup(swaggerDocs, {
-      customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.0/swagger-ui.css',
-      customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.0/swagger-ui-bundle.js',
       customfavIcon: 'https://swagger.io/favicon.ico',
+      customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.5/swagger-ui.css',
+      customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.5/swagger-ui-bundle.js',
+      customJsPreset: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.5/swagger-ui-standalone-preset.js',
     })
   );
   console.log(`Swagger documentation available at http://localhost:${port}/api-docs`);
