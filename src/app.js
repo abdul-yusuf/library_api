@@ -27,7 +27,7 @@ app.use(
   "/",
   swaggerUi.serve,
   swaggerUi.setup(swaggerSpec, {
-    customCssUrl: "/static/swagger-ui.css",
+    // customCssUrl: "/static/swagger-ui.css",
     customJsUrl: "/static/swagger-ui-bundle.js",
   })
 );
