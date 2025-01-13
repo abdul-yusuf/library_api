@@ -1,6 +1,10 @@
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
+// Serve static Swagger files
+const swaggerAssetPath = require('swagger-ui-dist').getAbsoluteFSPath();
+app.use('/swagger-ui', express.static(swaggerAssetPath));
+
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
@@ -27,12 +31,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 module.exports = (app, port) => {
   app.use('/', swaggerUi.serve,
-    swaggerUi.setup(swaggerDocs, {
-      customfavIcon: 'https://swagger.io/favicon.ico',
-      customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.5/swagger-ui.css',
-      customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.5/swagger-ui-bundle.js',
-      customJsPreset: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.5/swagger-ui-standalone-preset.js',
-    })
+    swaggerUi.setup(swaggerDocs)
   );
   console.log(`Swagger documentation available at http://localhost:${port}/api-docs`);
 };
